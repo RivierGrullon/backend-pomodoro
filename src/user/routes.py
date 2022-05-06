@@ -27,9 +27,12 @@ def create_user():
             return jsonify({ "error":"Password must be at least 7 characters." }), 400
         #hash the password
         hashed_password = generate_password_hash(password)
-
+        #if email exist
         if mongo.db.users.find_one({ "email": email }):
             return jsonify({ "error":"Email address already in use" }), 400
+        #if username exist
+        if mongo.db.users.find_one({ "username": username }):
+            return jsonify({ "error":"username already in use" }), 400
 
         mongo.db.users.insert_one({
             'id': id,
@@ -38,13 +41,7 @@ def create_user():
             'username' : username,
             'password' : hashed_password
             })
-        response = {
-            'id': id,
-            'name': name,
-            'username': username,
-            'email': email,
-            'password': hashed_password
-        }
-        return response
+
+        return redirect(url_for('home'))
     else:
         return not_found()
