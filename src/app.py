@@ -19,6 +19,15 @@ CORS(app)
 app.config['MONGO_URI']='mongodb://127.0.0.1:27017/pomodorodb'
 mongo = PyMongo(app)
 
+#decorator
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'username' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for('home'))
+    return wrap
 
 #routes
 
@@ -28,9 +37,12 @@ def home():
    return "<p>Home</p>"
 
 @cross_origin
-@app.route("/dashboard/")
+@app.route('/dashboard/')
+@login_required
 def dashboard():
-    return "<p>Dashboard</p>"
+    if 'username' in session:
+        return 'You are logged in as ' + session['username'] + ' id:' + session['id']
+    return redirect(url_for('home'))
 
 @cross_origin
 @app.errorhandler(404)
@@ -42,6 +54,7 @@ def not_found(error=None):
     message.status_code=404
     return message
 
+from logger import routes
 from user import routes
 
 

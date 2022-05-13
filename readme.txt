@@ -4,11 +4,15 @@ api codificada con python, flask y mongodb para servir de backend a una aplicaci
 
 PRINCIPIO
 =========
-usted es un usuario que desea registrarse en la aplicacion, entonces lo primero que debe hacer es
-enviar una solicitud POST a (por ahora) la ruta: http://localhost:5000/users con el siguiente json:
+usted es un usuario que desea registrarse, logearse y acceder al dashboard de la aplicacion, entonces
+siga los siguientes pasos:
+-para registrarse debe enviar una solicitud POST a (por ahora) la ruta: http://localhost:5000/users
+con el siguiente json:
 {"name": "su nombre", "email": "su email", "username": "su nombre de usuario", "password": "su clave"}
-para visualizarlo desde la base de datos enviar una solicitud GET a la ruta: http://localhost:5000/users
-mas adelante agregaremos mas funcionalidad para el manejo de usuarios, logearse y manejar los pomodoros.
+-para visualizar los usuarios registrados debe enviar una solicitud GET a la ruta: http://localhost:5000/users
+-para hacer login enviar una solicitud POST a la ruta: http://localhost:5000/login_user
+con el siguiente json: {"username": "su nombre de usuario", "password": "su clave"}
+-para desloguearse enviar una solicitud POST a la ruta: http://localhost:5000/logout
 para enviar estas solicitudes debe usar una herramienta de testing api como postman o insomnia
 
 INSTALACION
