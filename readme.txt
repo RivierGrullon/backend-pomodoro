@@ -4,11 +4,25 @@ api codificada con python, flask y mongodb para servir de backend a una aplicaci
 
 PRINCIPIO
 =========
-usted es un usuario que desea registrarse en la aplicacion, entonces lo primero que debe hacer es
-enviar una solicitud POST a (por ahora) la ruta: http://localhost:5000/users con el siguiente json:
+usted es un usuario que desea utilizar la aplicacion de pomodoro, entonces debe registrarse, hacer login y
+luego usar el token para visitar la rutas protegidas.
+
+USO
+====
+lo primero que debe hacer es enviar una solicitud POST a la ruta:
+http://localhost:5000/createuser con el siguiente json:
 {"name": "su nombre", "email": "su email", "username": "su nombre de usuario", "password": "su clave"}
-para visualizarlo desde la base de datos enviar una solicitud GET a la ruta: http://localhost:5000/users
-mas adelante agregaremos mas funcionalidad para el manejo de usuarios, logearse y manejar los pomodoros.
+
+para hacer login en la aplicacion en viar una solicitud POST a http://localhost:5000/login con el json
+{"username": "su nombre de usuario", "password": "su clave"} y recibira un token, el cual enviara como
+bearer token en la autorizacion de postman junto a la ruta deseada.
+
+otras rutas disponibles para los usuarios son:
+http://localhost:5000/getusers para visualizar todos los usuarios,
+http://localhost:5000/getuser/<id> para visualizar un usuario por el id,
+http://localhost:5000/updateuser/<id> para actualizar un usuario por el id,
+http://localhost:5000/deleteuser/<id> para eliminar un usuario por el id.
+
 para enviar estas solicitudes debe usar una herramienta de testing api como postman o insomnia
 
 INSTALACION
