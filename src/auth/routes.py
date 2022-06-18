@@ -16,8 +16,10 @@ def login():
         if check_password_hash(login_user['password'], password):
             access_token = create_access_token(identity=username)
             response = jsonify(access_token=access_token)
+            response.status_code=200
             return response
         response = jsonify({'messsage': 'Invalid username/password combination'})
+        response.status_code=401
         return response
     response = jsonify({'messsage': 'User not found'})
     return response
@@ -27,5 +29,6 @@ def login():
 @jwt_required(optional=False)
 def logout():
     response = jsonify({"msg": "logout successful"})
-    unset_jwt_cookies(response)
+    access_token = unset_jwt_cookies(response)
+    response.status_code=200
     return response
