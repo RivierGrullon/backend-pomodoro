@@ -36,6 +36,7 @@ def create_user():
         #hash the password
         hashed_password = generate_password_hash(password)
         #if email exist
+#
         if mongo.db.users.find_one({ "email": email }):
             response = jsonify({ "error":"Email address already in use" })
             response.status_code=403
@@ -45,6 +46,7 @@ def create_user():
             response = jsonify({ "error":"username already in use" })
             response.status_code=403
             return response
+#
         mongo.db.users.insert_one({
             'email' : email,
             'username' : username,
