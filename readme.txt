@@ -11,17 +11,17 @@ USO
 ====
 lo primero que debe hacer es enviar una solicitud POST a la ruta:
 http://localhost:5000/createuser con el siguiente json:
-{"name": "su nombre", "email": "su email", "username": "su nombre de usuario", "password": "su clave"}
+{"email": "su email", "username": "su nombre de usuario", "password": "su clave"}
 
 para hacer login en la aplicacion en viar una solicitud POST a http://localhost:5000/login con el json
 {"username": "su nombre de usuario", "password": "su clave"} y recibira un token, el cual enviara como
 bearer token en la autorizacion de postman junto a la ruta deseada.
 
 otras rutas disponibles para los usuarios son:
-http://localhost:5000/getusers para visualizar todos los usuarios,
-http://localhost:5000/getuser/<id> para visualizar un usuario por el id,
-http://localhost:5000/updateuser/<id> para actualizar un usuario por el id,
-http://localhost:5000/deleteuser/<id> para eliminar un usuario por el id.
+http://localhost:5000/getuser para visualizar los datos de su usuario,
+http://localhost:5000/updatepassword para actualizar el password,
+http://localhost:5000/createpomodoro para crear un pomodoro,
+http://localhost:5000/getpomodoro para visualizar sus pomodoros.
 
 para enviar estas solicitudes debe usar una herramienta de testing api como postman o insomnia
 
