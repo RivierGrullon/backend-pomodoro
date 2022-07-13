@@ -27,7 +27,7 @@ para enviar estas solicitudes debe usar una herramienta de testing api como post
 
 INSTALACION
 ===========
-1- asegurese tener instalado mongo, python, pip
+1- asegurese tener instalado python, pip
 2- dirijase a la carpeta donde descargara el proyecto
 3- clone el repositorio dentro de esta carpeta
 4- entre en backend-pomodoro (> cd backend-pomodoro)
@@ -35,6 +35,5 @@ INSTALACION
 6- declare el entorno virtual (> virtualenv venv)
 7- active el entorno virtual (> .\venv\Scripts\activate)
 8- instale las dependencias (> pip install -r requirements.txt)
-9- corra mongo en un terminal individual (> mongod)
-10- corra el servidor (> python src/app.py)
-11- probar las rutas con postman o insomnia
+9- corra el servidor (> python src/app.py)
+10- probar las rutas con postman o insomnia
