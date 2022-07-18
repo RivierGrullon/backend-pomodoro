@@ -11,7 +11,7 @@ from app import mongo
 def create_task():
     username = get_jwt_identity()
     if username:
-        if mongo.db.tasks.find_one({ "username": username }):
+        if mongo.db.users.find_one({ "username": username }):
             id = request.json['id']
             title = request.json['title']
             pomodorosCount = request.json['pomodorosCount']

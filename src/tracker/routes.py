@@ -49,25 +49,26 @@ def create_pomodoro():
         response = jsonify({"error": "user not found"})
         response.status_code=401
         return response
-'''
-@cross_origin
-@app.route('/gettracker', methods=['GET'])
-@jwt_required(optional=False)
-def get_tracker():
-    tracker =  mongo.db.pomodoro.aggregate( [
-   {
-     "$lookup":
-       {
-         "from": "users",
-         "localField": "username",
-         "foreignField": "username",
-         "as": "users and pomodoros"
-       }
-  }
-] )
-    response = json_util.dumps(tracker)
-    return Response(response, mimetype='application/json')
-'''
+#'''
+#@cross_origin
+#@app.route('/gettracker', methods=['GET'])
+#@jwt_required(optional=False)
+#def get_tracker():
+#    tracker =  mongo.db.pomodoro.aggregate( [
+#   {
+#     "$lookup":
+#       {
+#         "from": "users",
+#         "localField": "username",
+#         "foreignField": "username",
+#         "as": "users and pomodoros"
+#       }
+#  }
+#] )
+#    response = json_util.dumps(tracker)
+#    return Response(response, mimetype='application/json')
+#
+#'''
 @cross_origin
 @app.route('/getpomodoro', methods=['GET'])
 @jwt_required(optional=False)
