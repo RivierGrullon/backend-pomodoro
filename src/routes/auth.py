@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager, unset_jwt_cookies
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
-from __main__ import app
+from app import app
 from app import mongo, jwt
 
 @cross_origin

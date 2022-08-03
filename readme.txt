@@ -1,6 +1,6 @@
 BACKEND-POMODORO
 ================
-api codificada con python, flask y mongodb para servir de backend a una aplicacion para administar pomodoros
+api codificada con python, flask y mongodb para servir de backend a una aplicacion para administar tasks
 
 PRINCIPIO
 =========
@@ -20,8 +20,9 @@ bearer token en la autorizacion de postman junto a la ruta deseada.
 otras rutas disponibles para los usuarios son:
 http://localhost:5000/getuser para visualizar los datos de su usuario,
 http://localhost:5000/updatepassword para actualizar el password,
-http://localhost:5000/createpomodoro para crear un pomodoro,
-http://localhost:5000/getpomodoro para visualizar sus pomodoros.
+http://localhost:5000/createtask para crear una task,
+http://localhost:5000/deletetask para eliminar una task,
+http://localhost:5000/gettask para visualizar sus tasks.
 
 para enviar estas solicitudes debe usar una herramienta de testing api como postman o insomnia
 

@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
 from bson import json_util
-from __main__ import app
+from app import app
 from app import mongo, jwt
 
 @cross_origin
@@ -47,11 +47,15 @@ def create_user():
             response.status_code=403
             return response
 #
-        mongo.db.users.insert_one({
-            'email' : email,
-            'username' : username,
-            'password' : hashed_password
-            })
+        try: mongo.db.users.insert_one({
+                'email' : email,
+                'username' : username,
+                'password' : hashed_password
+                })
+        except:
+            response = jsonify({"msg": "No hosts found"})
+            response.status_code=401
+            return response
         response = jsonify({"msg": "user created successfully"})
         response.status_code=200
         return response
