@@ -2,8 +2,8 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask import request, jsonify, Response
 from flask_pymongo import PyMongo, pymongo
-from pymongo.mongo_client import MongoClient      #prueba
-from pymongo.server_api import ServerApi    #prueba
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from flask_cors import CORS, cross_origin
 from datetime import timedelta
@@ -25,11 +25,6 @@ jwt = JWTManager(app)
 CORS(app)
 
 # Setup Database
-#app.config['MONGO_URI'] = os.getenv('CONFIG_SECRET_DATABASE')
-#mongo = PyMongo(app)
-
-
-#client = pymongo.MongoClient("mongodb+srv://ramn:Samsung01@pomodorodb.htif2.mongodb.net/?retryWrites=true&w=majority", server_api=ServerApi('1'))
 client = pymongo.MongoClient(os.getenv('CONFIG_SECRET_DATABASE'), server_api=ServerApi('1'))
 mongo = client.test
 
@@ -38,7 +33,6 @@ mongo = client.test
 # Routes
 @cross_origin
 @app.route('/')
-@app.route('/home')
 @jwt_required(optional=True)
 def home():
     current_identity = get_jwt_identity()
@@ -60,13 +54,8 @@ def dashboard():
     response.status_code=200
     return response
 
-
-from user import routes
-from auth import routes
-#from Oauth import routes
-from tasks import routes
-from tracker import routes
+from routes import user, auth, tasks, Oauth
 
 
 if __name__=="__main__":
-	app.run(debug=True)
+    app.run(debug=False, port=int(os.environ.get("PORT", 5000)), host='0.0.0.0')
