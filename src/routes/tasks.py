@@ -22,16 +22,21 @@ def create_task():
             return response
 
         if username  and id and title and pomodorosCount and completed:
-            mongo.db.tasks.insert_one({
-                'id' : id,
-                'username': username,
-                'title' : title,
-                'pomodorosCount' : pomodorosCount,
-                'completed' : completed,
-                })
-            response = jsonify({"msg": "task created successfully"})
-            response.status_code=200
-            return response
+            try:
+                mongo.db.tasks.insert_one({
+                    'id' : id,
+                    'username': username,
+                    'title' : title,
+                    'pomodorosCount' : pomodorosCount,
+                    'completed' : completed,
+                    })
+                response = jsonify({"msg": "task created successfully"})
+                response.status_code=200
+                return response
+            except:
+                response = jsonify({"error": "an error occurred"})
+                response.status_code=401
+                return response
         else:
             response = jsonify({"error": "data could not be captured"})
             response.status_code=401
@@ -64,10 +69,53 @@ def delete_task():
         id = request.json['id']
         try:
             mongo.db.tasks.delete_one({'id': id})
+            response = jsonify({'messsage': ' task ' + id + ' was delete'})
+            response.status_code=200
+            return response
         except:
-            return jsonify({'messsage': ' task ' + id + ' not found'})
-        return jsonify({'messsage': ' task ' + id + ' was delete'})
+            response = jsonify({'messsage': ' task ' + id + ' not found'})
+            response.status_code=401
+            return response
     else:
-        response = jsonify({"error": "task not found"})
+        response = jsonify({"error": "user not found"})
+        response.status_code=401
+        return response
+
+@cross_origin
+@app.route('/updatetask', methods=['PUT'])
+@jwt_required(optional=False)
+def update_task():
+    username = get_jwt_identity()
+    if username:
+        if mongo.db.users.find_one({ "username": username }):
+            id = request.json['id']
+            title = request.json['title']
+            pomodorosCount = request.json['pomodorosCount']
+            completed = request.json['completed']
+        else:
+            response = jsonify({ "error":"the user to update does not exist" })
+            response.status_code=401
+            return response
+
+        if id and username and title and pomodorosCount and completed:
+            try:
+                mongo.db.tasks.update_one({'id': id}, {'$set':{
+                    'title' : title,
+                    'pomodorosCount' : pomodorosCount,
+                    'completed' : completed,
+                    }})
+                response = jsonify({"msg": "the task was updated"})
+                response.status_code=200
+                return response
+            except:
+                response = jsonify({"error": "an error occurred"})
+                response.status_code=401
+                return response
+        else:
+            response = jsonify({"error": "data could not be captured"})
+            response.status_code=401
+            return response
+    else:
+        response = jsonify({"error": "user not found"})
         response.status_code=401
         return response

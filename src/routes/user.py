@@ -12,9 +12,14 @@ from app import mongo, jwt
 def get_user():
     username = get_jwt_identity()
     if username:
-        user = mongo.db.users.find_one({'username': username})
-        response = json_util.dumps(user)
-        return Response(response, mimetype='application/json')
+        try:
+            user = mongo.db.users.find_one({'username': username})
+            response = json_util.dumps(user)
+            return Response(response, mimetype='application/json')
+        except:
+            response = jsonify({"error": "an error occurred"})
+            response.status_code=401
+            return response
     else:
         response = jsonify({"error": "user not found"})
         response.status_code=401
@@ -36,7 +41,6 @@ def create_user():
         #hash the password
         hashed_password = generate_password_hash(password)
         #if email exist
-#
         if mongo.db.users.find_one({ "email": email }):
             response = jsonify({ "error":"Email address already in use" })
             response.status_code=403
@@ -46,14 +50,14 @@ def create_user():
             response = jsonify({ "error":"username already in use" })
             response.status_code=403
             return response
-#
+        #try insert
         try: mongo.db.users.insert_one({
                 'email' : email,
                 'username' : username,
                 'password' : hashed_password
                 })
         except:
-            response = jsonify({"msg": "No hosts found"})
+            response = jsonify({"error": "an error occurred"})
             response.status_code=401
             return response
         response = jsonify({"msg": "user created successfully"})
@@ -80,9 +84,15 @@ def update_password():
         hashed_password = generate_password_hash(password)
         #search for usrname
         if mongo.db.users.find_one({ "username": username }):
-            mongo.db.users.update_one({'username': username}, {'$set':{
+            #try update password
+            try:
+                mongo.db.users.update_one({'username': username}, {'$set':{
                 'password': hashed_password,
-            }})
+                }})
+            except:
+                response = jsonify({"error": "an error occurred"})
+                response.status_code=401
+                return response
             response = jsonify({'messsage': ' user: ' + username + ' has updated the password'})
             response.status_code=200
             return response

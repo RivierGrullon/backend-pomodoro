@@ -22,6 +22,7 @@ http://localhost:5000/getuser para visualizar los datos de su usuario,
 http://localhost:5000/updatepassword para actualizar el password,
 http://localhost:5000/createtask para crear una task,
 http://localhost:5000/deletetask para eliminar una task,
+http://localhost:5000/updatetask para actualizar una task,
 http://localhost:5000/gettask para visualizar sus tasks.
 
 para enviar estas solicitudes debe usar una herramienta de testing api como postman o insomnia
