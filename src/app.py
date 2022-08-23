@@ -54,7 +54,7 @@ def dashboard():
     response.status_code=200
     return response
 
-from routes import user, auth, tasks, Oauth
+from routes import user, auth, tasks
 
 
 if __name__=="__main__":
